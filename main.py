@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
+from PIL import Image, ImageTk
 
 FONT_TUPLE = ("Arial", 17, "normal")
 
@@ -13,8 +14,19 @@ def open_image():
         ]
     )
 
-    # Change label contents
-    print(filename)
+    # Create a photoimage object of the image in the path and resize it while maintaining aspect ratio
+    basewidth = 500
+    image_file = Image.open(filename)
+    w_percent = (basewidth / float(image_file.size[0]))
+    h_size = int((float(image_file.size[1]) * float(w_percent)))
+    image_file = image_file.resize((basewidth, h_size))
+    image = ImageTk.PhotoImage(image_file)
+
+    image_area = Label(image=image)
+    image_area.image = image
+
+    # Position image
+    image_area.grid(column=1, row=1)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -42,10 +54,6 @@ select_image_button = Button(
 #                      text="Exit",
 #                      command=exit)
 
-# Grid method is chosen for placing
-# the widgets at respective positions
-# in a table like structure by
-# specifying rows and columns
 select_image_prompt.grid(column=1, row=1)
 
 select_image_button.grid(column=1, row=2)
