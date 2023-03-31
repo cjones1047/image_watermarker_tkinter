@@ -22,11 +22,13 @@ def open_image():
     image_file = image_file.resize((basewidth, h_size))
     image = ImageTk.PhotoImage(image_file)
 
-    image_area = Label(image=image)
+    image_area = Label(image=image, relief='ridge')
     image_area.image = image
 
     # Position image
-    image_area.grid(column=1, row=1)
+    image_area.grid(column=1, row=1, pady=20)
+
+    select_image_button.destroy()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
