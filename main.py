@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw, ImageFont
 
 FONT_TUPLE = ("Arial", 17, "normal")
 
@@ -20,7 +20,14 @@ def open_image():
     w_percent = (basewidth / float(image_file.size[0]))
     h_size = int((float(image_file.size[1]) * float(w_percent)))
     image_file = image_file.resize((basewidth, h_size))
-    image = ImageTk.PhotoImage(image_file)
+    image_file = image_file.convert('RGBA')
+    base = Image.new('RGBA', image_file.size, (255, 255, 255, 0))
+    fnt = ImageFont.truetype("Slabo27px-Regular.ttf", 200)
+    draw = ImageDraw.Draw(base, 'RGBA')
+    draw.text((100, h_size - 230), "CCJ", fill=(255, 255, 255, 100), font=fnt)
+    out = Image.alpha_composite(image_file, base)
+
+    image = ImageTk.PhotoImage(out)
 
     image_area = Label(image=image, relief='ridge')
     image_area.image = image
