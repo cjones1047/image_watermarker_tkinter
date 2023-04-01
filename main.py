@@ -2,7 +2,13 @@ from tkinter import *
 from tkinter import filedialog
 from PIL import Image, ImageTk, ImageDraw, ImageFont
 
-FONT_TUPLE = ("Arial", 17, "normal")
+
+def discard_image():
+    pass
+
+
+def save_image():
+    pass
 
 
 def open_image():
@@ -33,12 +39,25 @@ def open_image():
     image_area.image = image
 
     # Position image
-    image_area.grid(column=1, row=1, pady=20)
+    image_area.grid(column=1, row=1)
 
+    # change GUI buttons
     select_image_button.destroy()
 
+    save_image_button = Button(
+        text="Save",
+        command=save_image
+    )
+    save_image_button.grid(column=1, row=2, pady=(20, 10))
 
-# ---------------------------- UI SETUP ------------------------------- #
+    discard_image_button = Button(
+        text="Discard",
+        command=discard_image
+    )
+    discard_image_button.grid(column=1, row=3)
+
+
+# ---------------------------- UI INITIAL SETUP ------------------------------- #
 window = Tk()
 window.title("Image Watermarker")
 window.config(padx=50, pady=50)
